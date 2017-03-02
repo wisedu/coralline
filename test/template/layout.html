@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>场景</title>
+    <link rel="stylesheet" href="http://res.wisedu.com/fe_components/jqwidget/blue/bh.min.css" type="text/css" />
+    <link rel="stylesheet" href="http://res.wisedu.com/fe_components/jqwidget/blue/bh-scenes.css" type="text/css" id="bhThemes" />
+    <link rel="stylesheet" href="http://res.wisedu.com/fe_components/iconfont/iconfont.css">
+    <!--[if lt IE 9]>
+    <script src='http://res.wisedu.com/bower_components/html5shiv/dist/html5shiv.min.js'></script>
+    <![endif]-->
+
+</head>
+<body>
+
+<header></header>
+
+<main>
+    <%- body %>
+</main>
+
+<footer></footer>
+
+</body>
+
+<script src='http://res.wisedu.com/fe_components/jquery-1.11.3.js'></script>
+<script type="text/javascript" src="http://res.wisedu.com/bower_components/waves/waves.min.js"></script>
+<script src="http://res.wisedu.com/fe_components/bh_utils.js"></script>
+<script src="http://res.wisedu.com/fe_components/bh.min.js"></script>
+<script src='http://res.wisedu.com/fe_components/jqwidget/jqxwidget.min.js'></script>
+<script src='http://res.wisedu.com/bower_components/jqwidgets/jqwidgets/jqxtreegrid.js'></script>
+<script src="http://res.wisedu.com/fe_components/jqwidget/globalize.js"></script>
+<script src="http://res.wisedu.com/bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
+<script src="http://res.wisedu.com/fe_components/emap.js"></script>
+<script src="http://res.wisedu.com/fe_components/mock/mock.js"></script>
+<script>
+    $(function(){
+        //浏览器滚动条美化
+        $("body").niceScroll({zindex:99999});
+
+        //初始化页头
+        var headData = {
+            "showAsideNav": false, //显示侧边栏导航
+            "logo": "http://res.wisedu.com/scenes/public/images/demo/logo.png",
+            "title": "场景导航",
+//			"feedback": true,
+//			"appDetail": true,
+            "icons": [
+                {"className": "icon-apps", "attrs":{"id": "iconApps", "data-flag": true}},
+                {"className": "icon-settings"}
+            ], //传入的字体图标, 换肤图标不需要传，默认就有
+            //显示在右侧的用户头像
+            "userImage": "http://res.wisedu.com/scenes/public/images/demo/user1.png",
+            //头部的导航菜单
+//			"isNavHide": true,
+            //title：标题，active：表示该标题选中(必须有一个为true)，href：该标题的链接地址（可选）
+            "nav": [
+                {"title": "填写申请表",  "className": "firstFlag", "attribute":[{"key": "data-flag", "value": "nav"}] },
+                {"title": "考核进度"},
+                {"title": "考核进度1" , "active": true},
+                {"title": "考核进度2"},
+                {"title": "考核进度3"},
+                {"title": "考核进度4"},
+                {"title": "考核进度5"},
+                {"title": "考核进度6"},
+                {"title": "考核进度7"},
+                {"title": "考核进度8"},
+                {"title": "考核进度9"},
+                {"title": "考核进度10"},
+                {"title": "考核进度11"},
+                {"title": "考核进度12"},
+                {"title": "考核进度13"},
+                {"title": "考核进度14"},
+                {"title": "考核进度15"},
+                {"title": "考核进度16"},
+                {"title": "考核进度17"},
+                {"title": "考核进度18"},
+                {"title": "考核进度19"},
+                {"title": "考核历史", "isOpenNewPage": true}
+            ],
+            //头部下拉菜单
+            //text：下拉项，active：表示该项默认显示(必须有一个为true)，href：该项的链接地址（可选）
+            "dropMenu": [
+                {"text": "就业资讯师", "active": true, "id": "abc"},
+                {"text": "就业管理人员"}
+            ],
+            "dropMenuCallback": function(item){
+//				console.log(item)
+            },
+            "userInfo":{
+                "image": "http://res.wisedu.com/scenes/public/images/demo/user1.png",
+                "info": [
+                    "荆天骐",
+                    "01115089"
+                ],
+                "logoutHref": "#"
+            },
+            ready: function(){
+
+            }
+        };
+        $('header').bhHeader(headData);
+
+        $('header').on("headerRoleChange", function(e, text, $dom){
+//			console.log(e);
+//			console.log(text);
+//			console.log($dom);
+        });
+
+        //页脚初始化
+        $("footer").bhFooter({
+            text: "版权信息：© 2015 江苏金智教育信息股份有限公司 苏ICP备10204514号"
+        });
+
+        //给外层的container添加最小高度
+        BH_UTILS.setContentMinHeight($("body").children("main").children("article"));
+        //给咨询页面的container添加最小高度，时调整的弹出框能正确显示
+        BH_UTILS.setContentMinHeight($("div.scenes-cb-topContainer"));
+
+        //左侧边栏列表初始化
+        asideNavInit();
+        function asideNavInit(){
+            $.bhAsideNav.init({
+                title: "应用管理平台",
+                iconFont: "iconfont",
+                data: [
+                    [{
+                        text: "首页",
+                        icon: "icon-home",
+                        href: "2222"
+                    }],
+                    [{
+                        text: "应用管理",
+                        icon: "icon-viewmodule",
+                        children: [
+                            {text: "收到的消息"},
+                            {text: "发出的消息"},
+                            {text: "收藏的消息",href:"afdfdaf"}
+                        ]
+                    },
+                        {
+                            text: "移动管理",
+                            icon: "icon-phoneiphone",
+                            children: [
+                                {text: "广告位管理",icon: "icon-formatpaint"},
+                                {text: "海报位管理",icon: "icon-croporiginal"},
+                                {text: "首页内容管理",icon: "icon-borderall"},
+                                {text: "客户端版本管理",icon: "icon-developerboard"},
+                                {text: "关于软件",icon: "icon-erroroutline"}
+                            ]
+                        },
+                        {
+                            text: "系统管理",
+                            icon: "icon-personalvideo",
+                            children: [
+                                {text: "收到的消息"},
+                                {text: "发出的消息"},
+                                {text: "收藏的消息"}
+                            ]
+                        }],
+                    [{
+                        text: "业务域管理",
+                        icon: "icon-public"
+                    },
+                        {
+                            text: "用户组管理",
+                            icon: "icon-people"
+                        }],
+                    [{
+                        text: "意见反馈管理",
+                        icon: "icon-helpoutline"
+                    },
+                        {
+                            text: "评价管理",
+                            icon: "icon-thumbsupdown"
+                        },
+                        {
+                            text: "应用分析",
+                            icon: "icon-trendingup"
+                        }]
+                ]
+            })
+        }
+    });
+</script>
+</html>
