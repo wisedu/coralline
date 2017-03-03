@@ -1,3 +1,6 @@
+/**
+ * 将栅格转换成bh布局
+ */
 let utils = require('./utils');
 let async = require('async');
 let cheerio = require('cheerio');
@@ -12,6 +15,7 @@ function gridSystemToBh(_gridSystemHtml) {
     let guid = utils.newGuid();
     let $ = cheerio.load(`<div id="${guid}">${_gridSystemHtml}</div>`);
     let $content = $(`#${guid}`);
+    //读取是否存在bh-layout-role属性,有则进行转换,无则返回原html
     let $layout = $content.find('[bh-layout-role]');
 
     if($layout.length === 0){
@@ -68,12 +72,19 @@ function refactorGridSystemToBhLayout($layout, $) {
 
     let layoutName = $layout.attr('bh-layout-role');
 
+    //一个bh-layout-role节点的属性
     let attributes = compileAttributes($layout);
+    //标题对应的grid-item名
     let titleName = '';
+    //左侧nav对应的grid-item名
     let navName = '';
+    //左侧nav的样式
     let navStyle = '';
+    //section的样式
     let sectionStyle = '';
+    //section的内容
     let sectionContent = '';
+    //对应的bh模板html
     let templateHtml = '';
     switch (layoutName){
         case 'single':
@@ -144,12 +155,19 @@ function refactorGridSystemToBhLayout($layout, $) {
         .replace('@navStyle',navStyle)
         .replace('@sectionStyle',sectionStyle)
         .replace('@sectionContent',sectionContent);
-    
+
+    //插入bh的html
     $layout.before(bhHtml);
+    //删除原来的栅格html
     $layout.remove();
 
 }
 
+/**
+ * 复制属性到节点对象上
+ * @param $item
+ * @returns {string}
+ */
 function compileAttributes($item) {
     let attrsStr = '';
     let attrs = $item[0].attribs;

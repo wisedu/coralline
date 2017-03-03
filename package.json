@@ -1,30 +1,38 @@
 {
-  "name": "bh-template",
+  "name": "coralline",
   "version": "1.0.0",
-  "description": "change",
+  "description": "将栅格布局转换成black hole固定布局，并copy到examples文件夹下",
   "main": "index.js",
   "directories": {
     "test": "test"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "async": "^2.1.5",
-    "trailbreaker": "^1.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wisedu/bh-template.git"
+    "url": "git+https://github.com/wisedu/coralline.git"
   },
+  "keywords": [
+    "black",
+    "hole",
+    "grid",
+    "system",
+    "translate",
+    "html",
+    "ubase",
+    "vue",
+    "layout"
+  ],
   "author": "wisedu",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wisedu/bh-template/issues"
+    "url": "https://github.com/wisedu/coralline/issues"
   },
-  "homepage": "https://github.com/wisedu/bh-template#readme",
-  "keywords": [
-    "changge"
-  ]
+  "homepage": "https://github.com/wisedu/coralline#readme",
+  "devDependencies": {
+    "async": "^2.1.5",
+    "cheerio": "^0.22.0",
+    "trailbreaker": "^1.0.1"
+  }
 }
