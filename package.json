@@ -1,6 +1,6 @@
 {
   "name": "coralline",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "将栅格布局转换成black hole固定布局，并copy到examples文件夹下",
   "main": "index.js",
   "directories": {
@@ -33,6 +33,6 @@
   "devDependencies": {
     "async": "^2.1.5",
     "cheerio": "^0.22.0",
-    "trailbreaker": "^1.0.1"
+    "trailbreaker": "^1.0.3"
   }
 }

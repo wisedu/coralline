@@ -1,0 +1,32 @@
+[grid-layout="single"] {
+    display: grid;
+    grid-template-areas:
+            "title"
+            "nav-top"
+            "custom"
+            "filter"
+            "operate"
+            "content";
+
+    grid-template-rows: auto auto auto auto auto auto;
+    grid-template-columns: auto;
+}
+[grid-item="title"] {
+    grid-area: title;
+}
+[grid-item="nav-top"] {
+    grid-area: nav-top;
+}
+[grid-item="custom"] {
+    grid-area: custom;
+}
+
+[grid-item="filter"]{
+    grid-area: filter;
+}
+[grid-item="operate"]{
+    grid-area: operate;
+}
+[grid-item="content"]{
+    grid-area: content;
+}

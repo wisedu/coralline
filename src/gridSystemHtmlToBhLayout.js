@@ -37,21 +37,21 @@ function gridSystemToBh(_gridSystemHtml) {
  */
 function refactorGridSystemToBhLayout($layout, $) {
     let singleTemplate =
-        `<article @attributes>
-            <h2 grid-item="@titleName"></h2>
+        `<article @articleAttrs>
+            <h2 @titleAttrs>@titleContent</h2>
             <section>@sectionContent</section>
         </article>`;
 
     let singleNoTitleTemplate =
-        `<article @attributes>
+        `<article @articleAttrs>
             <section>@sectionContent</section>
         </article>`;
 
     let navLeftTemplate =
-        `<article @attributes>
-            <h2 grid-item="@titleName"></h2>
-            <nav grid-item="@navName" style="@navStyle">
-                
+        `<article @articleAttrs>
+            <h2 @titleAttrs>@titleContent</h2>
+            <nav @navAttrs>
+                @navContent
             </nav>
 
             <section style="@sectionStyle">
@@ -60,12 +60,12 @@ function refactorGridSystemToBhLayout($layout, $) {
         </article>`;
 
     let navLeftNoTitleTemplate =
-        `<article @attributes>
-            <nav grid-item="@navName" style="@navStyle">
-                
+        `<article @articleAttrs>
+            <nav @navAttrs>
+                @navContent
             </nav>
 
-            <section>
+            <section style="@sectionStyle">
                 @sectionContent
             </section>
         </article>`;
@@ -73,13 +73,15 @@ function refactorGridSystemToBhLayout($layout, $) {
     let layoutName = $layout.attr('bh-layout-role');
 
     //一个bh-layout-role节点的属性
-    let attributes = compileAttributes($layout);
-    //标题对应的grid-item名
-    let titleName = '';
-    //左侧nav对应的grid-item名
-    let navName = '';
-    //左侧nav的样式
-    let navStyle = '';
+    let articleAttrs = compileAttributes($layout);
+    //标题属性
+    let titleAttrs = '';
+    //标题内容
+    let titleContent = '';
+    //nav属性
+    let navAttrs = '';
+    //nav的内容
+    let navContent = '';
     //section的样式
     let sectionStyle = '';
     //section的内容
@@ -91,7 +93,8 @@ function refactorGridSystemToBhLayout($layout, $) {
             $layout.children().each(function (_index) {
                 if(_index === 0){
                     let $title = $(this);
-                    titleName = $title.children().attr('grid-item');
+                    titleAttrs = compileAttributes($title);
+                    titleContent = $title.html();
                     $title.remove();
                     return false;
                 }
@@ -107,14 +110,15 @@ function refactorGridSystemToBhLayout($layout, $) {
             $layout.children().each(function (_index) {
                 if(_index === 0){
                     let $title = $(this);
-                    titleName = $title.children().attr('grid-item');
+                    titleAttrs = compileAttributes($title);
+                    titleContent = $title.html();
                     $title.remove();
                 }else{
                     $(this).children().each(function (_index) {
                         let $item = $(this);
                         if(_index === 0){
-                            navName = $item.attr('grid-item');
-                            navStyle = $item.attr('style');
+                            navAttrs = compileAttributes($item, ['class']);
+                            navContent = $item.html();
                         }else{
                             sectionStyle = $item.attr('style');
                             sectionContent = $item.html();
@@ -126,12 +130,11 @@ function refactorGridSystemToBhLayout($layout, $) {
             templateHtml = navLeftTemplate;
             break;
         case 'navLeft-no-title':
-
             $layout.children().children().each(function (_index) {
                 let $item = $(this);
                 if(_index === 0){
-                    navName = $item.attr('grid-item');
-                    navStyle = $item.attr('style');
+                    navAttrs = compileAttributes($item, ['class']);
+                    navContent = $item.html();
                 }else{
                     sectionStyle = $item.attr('style');
                     sectionContent = $item.html();
@@ -149,10 +152,11 @@ function refactorGridSystemToBhLayout($layout, $) {
         return;
     }
     
-    let bhHtml = templateHtml.replace('@attributes',attributes)
-        .replace('@titleName',titleName)
-        .replace('@navName',navName)
-        .replace('@navStyle',navStyle)
+    let bhHtml = templateHtml.replace('@articleAttrs',articleAttrs)
+        .replace('@titleAttrs',titleAttrs)
+        .replace('@titleContent',titleContent)
+        .replace('@navAttrs',navAttrs)
+        .replace('@navContent',navContent)
         .replace('@sectionStyle',sectionStyle)
         .replace('@sectionContent',sectionContent);
 
@@ -166,12 +170,16 @@ function refactorGridSystemToBhLayout($layout, $) {
 /**
  * 复制属性到节点对象上
  * @param $item
+ * @param ignoreArray {Array} 要过滤的属性
  * @returns {string}
  */
-function compileAttributes($item) {
+function compileAttributes($item, ignoreArray) {
     let attrsStr = '';
     let attrs = $item[0].attribs;
     for(let key in attrs){
+        if(ignoreArray && ignoreArray.indexOf(key) > -1){
+            continue;
+        }
         attrsStr += `${key}="${attrs[key]}" `;
     }
     return attrsStr;

@@ -1,0 +1,21 @@
+<article grid-layout="navLeft" bh-layout-role="navLeft">
+    <h2 grid-item="title" aaa="aaa">title</h2>
+    <nav grid-item="nav-left" style="width: 100px;">
+        nav-left
+    </nav>
+
+    <section style="width: calc((100% - 100px)  / 1  * 1);">
+        <div grid-item="nav-top">
+            <div id="search" type="emapAdvancedQuery" data-options="modelUrl:&apos;&apos;,modelName:&apos;&apos;"
+                 click="searchClick"></div>
+        </div>
+        <div grid-item="custom">custom</div>
+        <div grid-item="filter">filter</div>
+        <div grid-item="operate">operate</div>
+        <div grid-item="content">
+            <div id="datatable" type="emapdatatable"
+                 config="pagePath: bs.api.pageModel,action: &apos;TABLE&apos;,customColumns: this.getCustomColumns()"></div>
+        </div>
+    </section>
+</article>
+<script src="layoutNavLeft.js"></script>
