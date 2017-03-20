@@ -2,7 +2,6 @@
  * 将栅格转换成bh布局
  */
 let utils = require('./utils');
-let async = require('async');
 let cheerio = require('cheerio');
 let path = require('path');
 

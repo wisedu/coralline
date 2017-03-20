@@ -1,5 +1,5 @@
 var gridToBhLayout = require('./src/init');
 
-module.exports.convert = function(_data, callback) {
-    gridToBhLayout.convert(_data, callback);
+module.exports.convert = function(_html, _style) {
+    return gridToBhLayout.convert(_html, _style);
 };

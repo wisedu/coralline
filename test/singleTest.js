@@ -1,19 +1,17 @@
 var convert = require('../index');
 var path = require('path');
+var async = require('async');
+var utils = require('./utils');
 
-
-let _srcFolderPath = path.join(__dirname, './pages/single');
-// let _templatePath = path.join(__dirname, './template/layout.html');
-// let _templateContentPlaceholderKey = '<%- body %>';
-let _translateType = 'ubase';
-
-let data = {
-    src: _srcFolderPath,
-    // template: _templatePath,
-    // templatePlaceholder: _templateContentPlaceholderKey,
-    translateType: _translateType
-};
-
-convert.convert(data, function (err, _result) {
-    console.log(_result)
-});
+async.parallel([
+        function(parallelCallback) {
+            utils.readFile(path.join(path.resolve(), 'test/pages/single/single.html'), parallelCallback);
+        },
+        function(parallelCallback) {
+            utils.readFile(path.join(path.resolve(), 'test/pages/single/single.scss'), parallelCallback);
+        }
+    ],
+    function(err, _results) {
+        var data = convert.convert(_results[0].data, _results[1].data);
+        console.log(data)
+    });
